@@ -1,0 +1,44 @@
+# Java/Gradle Backend
+backend/build/
+backend/.gradle/
+backend/.classpath
+backend/.project
+backend/.settings/
+backend/bin/
+backend/*.jar
+backend/*.war
+backend/*.iml
+backend/.idea/
+
+# Angular Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/npm-debug.log
+frontend/.DS_Store
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+
+# OS Files
+.DS_Store
+Thumbs.db
+*.log
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Cache
+*.cache
+.cache/

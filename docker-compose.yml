@@ -1,0 +1,49 @@
+services:
+  # Backend Service - Spring Boot + Gradle
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: uno-backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/build:/app/build
+      - gradle-cache:/root/.gradle
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - GRADLE_OPTS=-Dorg.gradle.daemon=false
+      - JAVA_TOOL_OPTIONS=-XX:TieredStopAtLevel=1
+    networks:
+      - uno-network
+    restart: unless-stopped
+
+  # Frontend Service - Angular
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: uno-frontend
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/angular.json:/app/angular.json
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - uno-network
+    environment:
+      - API_URL=http://backend:8080
+      - NODE_ENV=development
+
+# Persistent volumes for caching and performance
+volumes:
+  gradle-cache:
+    driver: local
+
+networks:
+  uno-network:
+    driver: bridge
